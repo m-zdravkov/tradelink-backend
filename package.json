@@ -1,0 +1,23 @@
+{
+  "name": "tradelink",
+  "version": "1.0.0",
+  "description": "A business-oriented social network.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/m-zdravkov/tradelink-backend.git"
+  },
+  "author": "Mihail Zdravkov",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/m-zdravkov/tradelink-backend/issues"
+  },
+  "homepage": "https://github.com/m-zdravkov/tradelink-backend#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "mongoose": "^5.0.13"
+  }
+}
