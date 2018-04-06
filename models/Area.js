@@ -33,3 +33,18 @@ module.exports.getAreaById = (id, callback) => {
 module.exports.addArea = (object, callback) => {
     Area.create(object, callback);
 }
+
+module.exports.updateArea = (id, object, options, callback) => {
+    let query = {_id:id};
+    let update = {
+        name: object.name,
+        type: object.type,
+        description: object.description,
+        sublocations: object.sublocations
+    };
+    Area.findOneAndUpdate(query, update, options, callback);
+}
+
+module.exports.deleteArea = (id, options, callback) => {
+    Area.findByIdAndRemove(id,options,callback);
+}

@@ -67,6 +67,29 @@ app.post('/api/areas', (req, res) => {
     });
 })
 
+// PUT Area
+app.put('/api/areas/:_id', (req, res) => {
+    let id = req.params._id;
+    let object = req.body;
+    Area.updateArea(id, object, {}, (err, object) => {
+        if(err) {
+            throw err;
+        }
+        res.json(object);
+    });
+});
+
+// DELETE Area
+app.delete('/api/areas/:_id', (req, res) => {
+    let id = req.params._id;
+    Area.deleteArea(id, {}, (err, id) => {
+        if(err) {
+            throw err;
+        }
+        res.json(id);
+    });
+})
+
 /*app.get('/about', (req, res) => {
     res.send('ABOUT');
 });
