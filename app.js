@@ -1,14 +1,21 @@
 const express = require('express');
+const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-
+const exphbs = require('express-handlebars');
 
 const app = express();
 
-app.use(bodyParser.json());
-
 // Model
 Area = require('./models/Area');
+
+const {
+    truncate,
+    stripTags,
+    formatDate,
+    select,
+    editIcon
+} = require('./helpers/hbs');
 
 // Connect to mongoose
 mongoose.connect('mongodb://localhost/tradelink-dev')
@@ -28,11 +35,32 @@ app.use((req, res, next) => {
     next();
 });
 
+// BodyParser Middleware
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json());
+
+// Handlebars Middleware
+app.engine('handlebars', exphbs({
+    helpers: {
+        truncate: truncate,
+        stripTags: stripTags,
+        formatDate:formatDate,
+        select:select,
+        editIcon: editIcon
+    },
+    defaultLayout:'main'
+}));
+app.set('view engine', 'handlebars');
+
+// Set static folder
+app.use(express.static(path.join(__dirname, 'public')));
+
 // Routes
 let index = require('./routes/index');
-//let areas = require('./routes/areas');
+let areas = require('./routes/areas');
 
 app.use('/', index);
+app.use('/api/areas', areas);
 
 //app.get('/', (req, res) => {
 //    res.send('Please use /api');
@@ -42,59 +70,6 @@ app.get('/api', (req, res) => {
     res.send("API index");
 });
 
-// GET Areas
-app.get('/api/areas', (req, res) => {
-    Area.getAreas((err, objects) => {
-        if(err) {
-            throw err;
-        }
-        res.json(objects);
-    });
-});
-
-// GET AreaById
-app.get('/api/areas/:_id', (req, res) => {
-    Area.getAreaById(req.params._id, (err, object) => {
-        if(err) {
-            throw err;
-        }
-        res.json(object);
-    });
-});
-
-// POST Area
-app.post('/api/areas', (req, res) => {
-    let object = req.body;
-    Area.addArea(object, (err, object) => {
-        if(err) {
-            throw err;
-        }
-        res.json(object);
-    });
-})
-
-// PUT Area
-app.put('/api/areas/:_id', (req, res) => {
-    let id = req.params._id;
-    let object = req.body;
-    Area.updateArea(id, object, {}, (err, object) => {
-        if(err) {
-            throw err;
-        }
-        res.json(object);
-    });
-});
-
-// DELETE Area
-app.delete('/api/areas/:_id', (req, res) => {
-    let id = req.params._id;
-    Area.deleteArea(id, {}, (err, id) => {
-        if(err) {
-            throw err;
-        }
-        res.json(id);
-    });
-})
 
 /*app.get('/about', (req, res) => {
     res.send('ABOUT');

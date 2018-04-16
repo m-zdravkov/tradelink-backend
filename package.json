@@ -1,7 +1,7 @@
 {
   "name": "tradelink",
-  "version": "1.0.0",
-  "description": "A business-oriented social network.",
+  "version": "0.1.0",
+  "description": "API and web server for a business-oriented social network.",
   "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -19,6 +19,8 @@
   "dependencies": {
     "body-parser": "^1.18.2",
     "express": "^4.16.3",
+    "express-handlebars": "^3.0.0",
+    "moment": "^2.22.1",
     "mongoose": "^5.0.13"
   }
 }
