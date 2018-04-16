@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 
+
 const app = express();
 
 app.use(bodyParser.json());
@@ -28,9 +29,14 @@ app.use((req, res, next) => {
 });
 
 // Routes
-app.get('/', (req, res) => {
-    res.send('Please use /api');
-});
+let index = require('./routes/index');
+//let areas = require('./routes/areas');
+
+app.use('/', index);
+
+//app.get('/', (req, res) => {
+//    res.send('Please use /api');
+//});
 
 app.get('/api', (req, res) => {
     res.send("API index");
@@ -98,7 +104,7 @@ app.post('/profile', (req, res) => {
     res.send('OK');
 });*/
 
-const port = 8080;
+const port = process.env.port || 8080;
 
 app.listen(port, () => {
     console.log(`Server started on port ${port}...`);
