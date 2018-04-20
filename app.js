@@ -58,26 +58,15 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes
 let index = require('./routes/index');
 let areas = require('./routes/areas');
+let areasRendered = require('./routes/rendered/areas');
 
 app.use('/', index);
 app.use('/api/areas', areas);
-
-//app.get('/', (req, res) => {
-//    res.send('Please use /api');
-//});
+app.use('/areas', areasRendered);
 
 app.get('/api', (req, res) => {
     res.send("API index");
 });
-
-
-/*app.get('/about', (req, res) => {
-    res.send('ABOUT');
-});
-
-app.post('/profile', (req, res) => {
-    res.send('OK');
-});*/
 
 const port = process.env.port || 8080;
 
