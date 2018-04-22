@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
-const ProfileSchema = new Schema({
+const ContactSchema = new Schema({
     id: {
         type: String,
         required: true
     },
-    name: {
+    type: {
         type: String,
         required: true
     },
@@ -14,9 +14,9 @@ const ProfileSchema = new Schema({
         type: String,
         required: false
     },
-    dateCreated: {
-        type: Date,
-        default: Date.now()
+    text: {
+        type: String,
+        required: true
     },
 });
 

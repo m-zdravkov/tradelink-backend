@@ -10,6 +10,10 @@ const ClientSchema = new Schema({
         type: String,
         required: true
     },
+    username: {
+        type: String,
+        required: true
+    },
     token: {
         type: String,
         required: true

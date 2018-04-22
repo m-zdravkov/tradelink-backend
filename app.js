@@ -8,6 +8,7 @@ const app = express();
 
 // Model
 Area = require('./models/Area');
+Repository = require('./models/Repository');
 
 const {
     truncate,
