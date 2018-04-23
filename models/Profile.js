@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ProfileSchema = new Schema({
-    id: {
-        type: String,
-        required: true
-    },
     name: {
         type: String,
         required: true
@@ -23,34 +19,34 @@ const ProfileSchema = new Schema({
         required: false
     },
     Admins: {
-        type: [mongoose.Types.ObjectId],
+        type: [Schema.ObjectId],
         required: false //TODO: change to true
     },
     Contacts: {
-        type: [mongoose.Types.ObjectId],
+        type: [Schema.ObjectId],
         required: false       
     },
     Trade: {
-        type: string,
+        type: String,
         required: false
     },
     TradeTags: {
-        type: [mongoose.Types.ObjectId],
+        type: [Schema.ObjectId],
         required: false
     },
     Needs: {
-        type: string,
+        type: String,
         required: false
     },
     NeedsTags: {
-        type: [mongoose.Types.ObjectId],
+        type: [Schema.Types.ObjectId],
         required: false
     },
     Areas: {
-        type: [mongoose.Types.ObjectId],
+        type: [Schema.Types.ObjectId],
         required: false
     }
 
 });
 
-mongoose.model('profiles', ProfileSchema);
+module.exports = mongoose.model('profiles', ProfileSchema);

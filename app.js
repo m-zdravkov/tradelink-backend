@@ -3,12 +3,16 @@ const path = require('path');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const exphbs = require('express-handlebars');
+let requireUncached = require('require-uncached');
 
 const app = express();
 
-// Model
-Area = require('./models/Area');
-Repository = require('./models/Repository');
+// Models
+let Client = require('./models/Client');
+let Area = require('./models/Area');
+let Profile = require('./models/Profile');
+let ClientProfile = require('./models/ClientProfile');
+let Contact = require('./models/Contact');
 
 const {
     truncate,
@@ -26,8 +30,8 @@ mongoose.connect('mongodb://localhost/tradelink-dev')
 const db = mongoose.connection;
 
 // Load Profile model
-require('./models/Profile');
-const Profile = mongoose.model('profiles');
+//require('./models/Profile');
+//const Profile = mongoose.model('profiles');
 
 // Middleware
 app.use((req, res, next) => {
@@ -56,13 +60,26 @@ app.set('view engine', 'handlebars');
 // Set static folder
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Routes
-let index = require('./routes/index');
-let areas = require('./routes/areas');
-let areasRendered = require('./routes/rendered/areas');
+// Routers
+let indexRt = require('./routes/index');
+let areaRt = require('./routes/areaRouter');
+let clientRt = require('./routes/clientRouter');
+let clientProfileRt = requireUncached('./routes/crudRouter')(ClientProfile);
+let profileRt = requireUncached('./routes/crudRouter')(Profile);
+let contactRt = requireUncached('./routes/crudRouter')(Contact);
+// Rendered
+let areasRendered = require('./routes/rendered/renderedAreaRouter');
 
-app.use('/', index);
-app.use('/api/areas', areas);
+// Middleware
+
+app.use('/', indexRt);
+// API
+app.use('/api/areas', areaRt);
+app.use('/api/clients', clientRt);
+app.use('/api/clientprofiles', clientProfileRt);
+app.use('/api/profiles', profileRt);
+app.use('/api/contacts', contactRt);
+// Rendered
 app.use('/areas', areasRendered);
 
 app.get('/api', (req, res) => {

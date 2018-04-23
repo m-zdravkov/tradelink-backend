@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ContactSchema = new Schema({
-    id: {
-        type: String,
-        required: true
-    },
     type: {
         type: String,
         required: true
@@ -20,4 +16,4 @@ const ContactSchema = new Schema({
     },
 });
 
-mongoose.model('profiles', ProfileSchema);
+module.exports = mongoose.model('contacts', ContactSchema);

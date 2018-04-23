@@ -2,10 +2,6 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 const ClientSchema = new Schema({
-    id: {
-        type: String,
-        required: true
-    },
     email: {
         type: String,
         required: true
@@ -24,4 +20,4 @@ const ClientSchema = new Schema({
     },
 });
 
-mongoose.model('clients', ClientSchema);
+module.exports = mongoose.model('clients', ClientSchema);
