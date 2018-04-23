@@ -61,18 +61,19 @@ app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routers
-let indexRt = require('./routes/index');
+let indexRt = require('./routes/indexRouter');
 let areaRt = require('./routes/areaRouter');
 let clientRt = require('./routes/clientRouter');
 let clientProfileRt = requireUncached('./routes/crudRouter')(ClientProfile);
 let profileRt = requireUncached('./routes/crudRouter')(Profile);
 let contactRt = requireUncached('./routes/crudRouter')(Contact);
 // Rendered
+let indexRendered = require('./routes/rendered/renderedIndexRouter');
 let areasRendered = require('./routes/rendered/renderedAreaRouter');
 
 // Middleware
 
-app.use('/', indexRt);
+app.use('/api', indexRt);
 // API
 app.use('/api/areas', areaRt);
 app.use('/api/clients', clientRt);
@@ -80,6 +81,7 @@ app.use('/api/clientprofiles', clientProfileRt);
 app.use('/api/profiles', profileRt);
 app.use('/api/contacts', contactRt);
 // Rendered
+app.use('/', indexRendered);
 app.use('/areas', areasRendered);
 
 app.get('/api', (req, res) => {
