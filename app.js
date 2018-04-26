@@ -88,8 +88,10 @@ app.get('/api', (req, res) => {
     res.send("API index");
 });
 
-const port = process.env.port || 8080;
+app.port = process.env.port || 8080;
 
-app.listen(port, () => {
-    console.log(`Server started on port ${port}...`);
+app.listen(app.port, () => {
+    console.log(`Server started on port ${app.port}...`);
 });
+
+module.exports = app;
