@@ -4,7 +4,9 @@
   "description": "API and web server for a business-oriented social network.",
   "main": "app.js",
   "scripts": {
-    "test": "mocha"
+    "start": "nodemon --exec \"npm run start-dev\"",
+    "start-dev": "env env=dev node app.js",
+    "test": "env env=test port=8081 mocha"
   },
   "repository": {
     "type": "git",
@@ -26,6 +28,7 @@
   },
   "devDependencies": {
     "chai": "^4.1.2",
-    "mocha": "^5.1.1"
+    "mocha": "^5.1.1",
+    "supertest": "^3.0.0"
   }
 }

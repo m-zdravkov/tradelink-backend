@@ -1,0 +1,10 @@
+{
+    "db-dev": {
+        "engine": "mongo",
+        "url": "mongodb://localhost/tradelink-dev"
+    },
+    "db-test": {
+        "engine": "mongo",
+        "url": "mongodb://localhost/tradelink-bll-test"
+    }
+}

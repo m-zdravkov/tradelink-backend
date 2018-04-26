@@ -1,11 +1,27 @@
-const express = require('express');
-const path = require('path');
-const mongoose = require('mongoose');
-const bodyParser = require('body-parser');
-const exphbs = require('express-handlebars');
+let express = require('express');
+let path = require('path');
+let mongoose = require('mongoose');
+let bodyParser = require('body-parser');
+let exphbs = require('express-handlebars');
 let requireUncached = require('require-uncached');
 
-const app = express();
+let app = module.exports = express();
+
+// Get the environment setting from the cli
+app.environment = 'dev';
+
+/*process.argv.forEach(function (val, index, array) {
+    if(val.substring(0,6) === "--env=") {
+        app.environment = val.slice(6);
+    }
+});*/
+if(process.env.env !== '')
+    app.environment = process.env.env;
+
+if(app.environment === '')
+    app.environment = 'dev';
+
+console.log(`App running in '${app.environment}' environment.`);
 
 // Models
 let Client = require('./models/Client');
@@ -14,7 +30,7 @@ let Profile = require('./models/Profile');
 let ClientProfile = require('./models/ClientProfile');
 let Contact = require('./models/Contact');
 
-const {
+let {
     truncate,
     stripTags,
     formatDate,
@@ -22,16 +38,21 @@ const {
     editIcon
 } = require('./helpers/hbs');
 
-// Connect to mongoose
-mongoose.connect('mongodb://localhost/tradelink-dev')
-.then(() => console.log('MongoDB connected...'))
+// Connect to mongoose database
+let dbConfig = require('./dbconfig.json');
+let dbUrl = '';
+
+switch(app.environment) {
+    default:
+    case 'dev': dbUrl = 'mongodb://localhost/tradelink-dev'; break;
+    case 'test': dbUrl = 'mongodb://localhost/tradelink-bll-dev'; break;
+}
+
+mongoose.connect(dbUrl)
+.then(() => console.log(`MongoDB connected @ ${dbUrl} ...`))
 .catch(err => console.log(err));
 
-const db = mongoose.connection;
-
-// Load Profile model
-//require('./models/Profile');
-//const Profile = mongoose.model('profiles');
+let db = mongoose.connection;
 
 // Middleware
 app.use((req, res, next) => {
@@ -93,5 +114,3 @@ app.port = process.env.port || 8080;
 app.listen(app.port, () => {
     console.log(`Server started on port ${app.port}...`);
 });
-
-module.exports = app;
