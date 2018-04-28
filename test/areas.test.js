@@ -10,4 +10,9 @@ describe('Areas CRUD', () => {
             .expect('Content-type',/json/)
             .expect(200, done);
     });
+
+    //it('gets a non-existent area', (done) => {
+    //    request(app).get('/api/areas/nothing')
+    //        .expect(404, done);
+    //});
 });
