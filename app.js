@@ -8,8 +8,12 @@ let passport = require('passport');
 let app = module.exports = express();
 
 // Get the environment setting from the CLI
-require('./helpers/environmentSetter')(app);
+require('./helpers/environmentHelper')(app);
 
+// Database setup
+require('./helpers/databaseHelper')(app);
+
+// For rendered views
 let {
     truncate,
     stripTags,
@@ -18,25 +22,6 @@ let {
     editIcon
 } = require('./helpers/hbs');
 
-require('./helpers/databaseHelper')(app);
-
-/*
-// Connect to mongoose database
-let dbConfig = require('./dbconfig.json');
-let dbUrl = '';
-
-switch(app.environment) {
-    default:
-    case 'dev': dbUrl = 'mongodb://localhost/tradelink-dev'; break;
-    case 'test': dbUrl = 'mongodb://localhost/tradelink-bll-dev'; break;
-}
-
-mongoose.connect(dbUrl)
-.then(() => console.log(`MongoDB connected @ ${dbUrl} ...`))
-.catch(err => console.log(err));
-
-let db = mongoose.connection;
-*/
 // Middleware
 app.use((req, res, next) => {
     // Console logger

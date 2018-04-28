@@ -3,10 +3,11 @@ let fs = require('fs');
 
 /**
  * Sets up the db connection of our application.
+ * Requires app.environment from environmentHelper.
  * @param {Express} app 
  */
 module.exports = (app) => {
-    // Connect to a mongoose database, depending on environment
+    // Connect to a mongoose database, depending on environment.
     
     fs.readFile('./dbconfig.json', (err, data) => {
         if(err)
