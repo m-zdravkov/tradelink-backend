@@ -4,8 +4,8 @@ let router = express.Router();
 let requireUncached = require('require-uncached');
 
 /**
- * Loads routes into the app. Include router middleware here.
- * @param {Express} app 
+ * Loads routes into the provided app. Include router middleware here.
+ * @param {Express} app Your Express application
  */
 module.exports = (app) => {
     let Index = require('../routes/indexRouter');

@@ -3,20 +3,12 @@ let path = require('path');
 let mongoose = require('mongoose');
 let bodyParser = require('body-parser');
 let exphbs = require('express-handlebars');
+let passport = require('passport');
 
 let app = module.exports = express();
 
 // Get the environment setting from the CLI
-app.environment = 'dev';
-
-if( process.env.env !== '' &&
-    process.env.env !== 'undefined')
-        app.environment = process.env.env;
-
-console.log(`App running in '${app.environment}' environment.`);
-
-// Models
-//let models = require('./helpers/modelsLoader');
+require('./helpers/environmentSetter')(app);
 
 let {
     truncate,
@@ -26,6 +18,9 @@ let {
     editIcon
 } = require('./helpers/hbs');
 
+require('./helpers/databaseHelper')(app);
+
+/*
 // Connect to mongoose database
 let dbConfig = require('./dbconfig.json');
 let dbUrl = '';
@@ -41,7 +36,7 @@ mongoose.connect(dbUrl)
 .catch(err => console.log(err));
 
 let db = mongoose.connection;
-
+*/
 // Middleware
 app.use((req, res, next) => {
     // Console logger
@@ -70,9 +65,7 @@ app.set('view engine', 'handlebars');
 app.use(express.static(path.join(__dirname, 'public')));
 
 // Routes and router middleware
-let routers = require('./helpers/routersLoader')(app);
-
-// Middleware (other)
+require('./helpers/routersLoader')(app);
 
 // Port
 app.port = process.env.port || 8080;

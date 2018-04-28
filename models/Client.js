@@ -10,6 +10,14 @@ const ClientSchema = new Schema({
         type: String,
         required: true
     },
+    passwordHash: {
+        type: String,
+        required: false //TODO: set to true
+    },
+    salt: {
+        type: String,
+        required: false //TODO: set to true
+    },
     token: {
         type: String,
         required: true
